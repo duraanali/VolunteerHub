@@ -79,10 +79,20 @@ app.post("/api/volunteers", async (req, res) => {
 
     // Validate required fields
     if (
-      !volunteer.name ||
+      !volunteer.firstName ||
+      !volunteer.lastName ||
       !volunteer.email ||
+      !volunteer.phone ||
+      !volunteer.address ||
+      !volunteer.city ||
+      !volunteer.state ||
+      !volunteer.zip ||
       !volunteer.skills ||
-      !volunteer.availability
+      !volunteer.availability ||
+      !volunteer.interests ||
+      !volunteer.referral ||
+      !volunteer.emergencyContact ||
+      !volunteer.emergencyPhone
     ) {
       return res.status(400).json({ error: "Missing required fields" });
     }
@@ -121,10 +131,20 @@ app.put("/api/volunteers/:id", async (req, res) => {
 
     // Validate required fields
     if (
-      !volunteer.name ||
+      !volunteer.firstName ||
+      !volunteer.lastName ||
       !volunteer.email ||
+      !volunteer.phone ||
+      !volunteer.address ||
+      !volunteer.city ||
+      !volunteer.state ||
+      !volunteer.zip ||
       !volunteer.skills ||
-      !volunteer.availability
+      !volunteer.availability ||
+      !volunteer.interests ||
+      !volunteer.referral ||
+      !volunteer.emergencyContact ||
+      !volunteer.emergencyPhone
     ) {
       return res.status(400).json({ error: "Missing required fields" });
     }

@@ -106,16 +106,42 @@ const volunteersDb = {
 
   // Create a new volunteer
   create: async (volunteer) => {
-    const { name, email, skills, availability, phone, experience } = volunteer;
+    const {
+      firstName,
+      lastName,
+      email,
+      phone,
+      address,
+      city,
+      state,
+      zip,
+      skills,
+      availability,
+      experience,
+      interests,
+      referral,
+      emergencyContact,
+      emergencyPhone,
+    } = volunteer;
+
     const result = await run(
-      "INSERT INTO volunteers (name, email, skills, availability, phone, experience) VALUES (?, ?, ?, ?, ?, ?)",
+      "INSERT INTO volunteers (firstName, lastName, email, phone, address, city, state, zip, skills, availability, experience, interests, referral, emergencyContact, emergencyPhone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
-        name,
+        firstName,
+        lastName,
         email,
+        phone,
+        address,
+        city,
+        state,
+        zip,
         JSON.stringify(skills),
         JSON.stringify(availability),
-        phone,
         experience,
+        interests,
+        referral,
+        emergencyContact,
+        emergencyPhone,
       ]
     );
     return result.id;
@@ -123,16 +149,42 @@ const volunteersDb = {
 
   // Update a volunteer
   update: async (id, volunteer) => {
-    const { name, email, skills, availability, phone, experience } = volunteer;
+    const {
+      firstName,
+      lastName,
+      email,
+      phone,
+      address,
+      city,
+      state,
+      zip,
+      skills,
+      availability,
+      experience,
+      interests,
+      referral,
+      emergencyContact,
+      emergencyPhone,
+    } = volunteer;
+
     await run(
-      "UPDATE volunteers SET name = ?, email = ?, skills = ?, availability = ?, phone = ?, experience = ? WHERE id = ?",
+      "UPDATE volunteers SET firstName = ?, lastName = ?, email = ?, phone = ?, address = ?, city = ?, state = ?, zip = ?, skills = ?, availability = ?, experience = ?, interests = ?, referral = ?, emergencyContact = ?, emergencyPhone = ? WHERE id = ?",
       [
-        name,
+        firstName,
+        lastName,
         email,
+        phone,
+        address,
+        city,
+        state,
+        zip,
         JSON.stringify(skills),
         JSON.stringify(availability),
-        phone,
         experience,
+        interests,
+        referral,
+        emergencyContact,
+        emergencyPhone,
         id,
       ]
     );
