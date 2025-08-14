@@ -61,132 +61,47 @@ const volunteersDb = {
   // Get all volunteers
   getAll: async () => {
     const rows = await all("SELECT * FROM volunteers");
-    return rows.map((row) => ({
-      ...row,
-      skills: JSON.parse(row.skills),
-      availability: JSON.parse(row.availability),
-    }));
+    return rows;
   },
 
   // Get volunteers by skill
   getBySkill: async (skill) => {
+    // Since we no longer have skills, return all volunteers
     const rows = await all("SELECT * FROM volunteers");
-    return rows
-      .map((row) => ({
-        ...row,
-        skills: JSON.parse(row.skills),
-        availability: JSON.parse(row.availability),
-      }))
-      .filter((volunteer) => volunteer.skills.includes(skill));
+    return rows;
   },
 
   // Get volunteers by availability
   getByAvailability: async (availability) => {
+    // Since we no longer have availability, return all volunteers
     const rows = await all("SELECT * FROM volunteers");
-    return rows
-      .map((row) => ({
-        ...row,
-        skills: JSON.parse(row.skills),
-        availability: JSON.parse(row.availability),
-      }))
-      .filter((volunteer) => volunteer.availability.includes(availability));
+    return rows;
   },
 
   // Get a volunteer by ID
   getById: async (id) => {
     const row = await get("SELECT * FROM volunteers WHERE id = ?", [id]);
-    if (!row) return null;
-
-    return {
-      ...row,
-      skills: JSON.parse(row.skills),
-      availability: JSON.parse(row.availability),
-    };
+    return row;
   },
 
   // Create a new volunteer
   create: async (volunteer) => {
-    const {
-      firstName,
-      lastName,
-      email,
-      phone,
-      address,
-      city,
-      state,
-      zip,
-      skills,
-      availability,
-      experience,
-      interests,
-      referral,
-      emergencyContact,
-      emergencyPhone,
-    } = volunteer;
+    const { name, email, phone } = volunteer;
 
     const result = await run(
-      "INSERT INTO volunteers (firstName, lastName, email, phone, address, city, state, zip, skills, availability, experience, interests, referral, emergencyContact, emergencyPhone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-      [
-        firstName,
-        lastName,
-        email,
-        phone,
-        address,
-        city,
-        state,
-        zip,
-        JSON.stringify(skills),
-        JSON.stringify(availability),
-        experience,
-        interests,
-        referral,
-        emergencyContact,
-        emergencyPhone,
-      ]
+      "INSERT INTO volunteers (name, email, phone) VALUES (?, ?, ?)",
+      [name, email, phone]
     );
     return result.id;
   },
 
   // Update a volunteer
   update: async (id, volunteer) => {
-    const {
-      firstName,
-      lastName,
-      email,
-      phone,
-      address,
-      city,
-      state,
-      zip,
-      skills,
-      availability,
-      experience,
-      interests,
-      referral,
-      emergencyContact,
-      emergencyPhone,
-    } = volunteer;
+    const { name, email, phone } = volunteer;
 
     await run(
-      "UPDATE volunteers SET firstName = ?, lastName = ?, email = ?, phone = ?, address = ?, city = ?, state = ?, zip = ?, skills = ?, availability = ?, experience = ?, interests = ?, referral = ?, emergencyContact = ?, emergencyPhone = ? WHERE id = ?",
-      [
-        firstName,
-        lastName,
-        email,
-        phone,
-        address,
-        city,
-        state,
-        zip,
-        JSON.stringify(skills),
-        JSON.stringify(availability),
-        experience,
-        interests,
-        referral,
-        emergencyContact,
-        emergencyPhone,
-        id,
-      ]
+      "UPDATE volunteers SET name = ?, email = ?, phone = ? WHERE id = ?",
+      [name, email, phone, id]
     );
     return true;
   },

@@ -78,33 +78,8 @@ app.post("/api/volunteers", async (req, res) => {
     const volunteer = req.body;
 
     // Validate required fields
-    if (
-      !volunteer.firstName ||
-      !volunteer.lastName ||
-      !volunteer.email ||
-      !volunteer.phone ||
-      !volunteer.address ||
-      !volunteer.city ||
-      !volunteer.state ||
-      !volunteer.zip ||
-      !volunteer.skills ||
-      !volunteer.availability ||
-      !volunteer.interests ||
-      !volunteer.referral ||
-      !volunteer.emergencyContact ||
-      !volunteer.emergencyPhone
-    ) {
+    if (!volunteer.name || !volunteer.email || !volunteer.phone) {
       return res.status(400).json({ error: "Missing required fields" });
-    }
-
-    // Ensure skills and availability are arrays
-    if (
-      !Array.isArray(volunteer.skills) ||
-      !Array.isArray(volunteer.availability)
-    ) {
-      return res
-        .status(400)
-        .json({ error: "Skills and availability must be arrays" });
     }
 
     const id = await volunteersDb.create(volunteer);
@@ -130,33 +105,8 @@ app.put("/api/volunteers/:id", async (req, res) => {
     }
 
     // Validate required fields
-    if (
-      !volunteer.firstName ||
-      !volunteer.lastName ||
-      !volunteer.email ||
-      !volunteer.phone ||
-      !volunteer.address ||
-      !volunteer.city ||
-      !volunteer.state ||
-      !volunteer.zip ||
-      !volunteer.skills ||
-      !volunteer.availability ||
-      !volunteer.interests ||
-      !volunteer.referral ||
-      !volunteer.emergencyContact ||
-      !volunteer.emergencyPhone
-    ) {
+    if (!volunteer.name || !volunteer.email || !volunteer.phone) {
       return res.status(400).json({ error: "Missing required fields" });
-    }
-
-    // Ensure skills and availability are arrays
-    if (
-      !Array.isArray(volunteer.skills) ||
-      !Array.isArray(volunteer.availability)
-    ) {
-      return res
-        .status(400)
-        .json({ error: "Skills and availability must be arrays" });
     }
 
     await volunteersDb.update(id, volunteer);

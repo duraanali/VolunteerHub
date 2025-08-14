@@ -10,26 +10,14 @@ const db = new sqlite3.Database(dbPath, (err) => {
   }
   console.log("Connected to the SQLite database.");
 
-  // Create volunteers table with updated schema to match frontend
+  // Create volunteers table with simplified schema
   db.run(
     `
     CREATE TABLE IF NOT EXISTS volunteers (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      firstName TEXT NOT NULL,
-      lastName TEXT NOT NULL,
+      name TEXT NOT NULL,
       email TEXT NOT NULL,
-      phone TEXT NOT NULL,
-      address TEXT NOT NULL,
-      city TEXT NOT NULL,
-      state TEXT NOT NULL,
-      zip TEXT NOT NULL,
-      skills TEXT NOT NULL,
-      availability TEXT NOT NULL,
-      experience TEXT,
-      interests TEXT NOT NULL,
-      referral TEXT NOT NULL,
-      emergencyContact TEXT NOT NULL,
-      emergencyPhone TEXT NOT NULL
+      phone TEXT NOT NULL
     )
   `,
     (err) => {
@@ -49,47 +37,20 @@ const db = new sqlite3.Database(dbPath, (err) => {
         // If the table is empty, insert sample data
         if (row.count === 0) {
           const sampleVolunteer = {
-            firstName: "John",
-            lastName: "Doe",
+            name: "John Doe",
             email: "john@example.com",
             phone: "555-0123",
-            address: "123 Main St",
-            city: "Anytown",
-            state: "CA",
-            zip: "12345",
-            skills: JSON.stringify(["Teaching", "Technology"]),
-            availability: JSON.stringify([
-              "Weekday mornings",
-              "Weekend afternoons",
-            ]),
-            experience: "5 years of teaching experience",
-            interests: "Education and technology outreach programs",
-            referral: "Website",
-            emergencyContact: "Jane Doe",
-            emergencyPhone: "555-0124",
           };
 
           db.run(
             `
-          INSERT INTO volunteers (firstName, lastName, email, phone, address, city, state, zip, skills, availability, experience, interests, referral, emergencyContact, emergencyPhone)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          INSERT INTO volunteers (name, email, phone)
+          VALUES (?, ?, ?)
         `,
             [
-              sampleVolunteer.firstName,
-              sampleVolunteer.lastName,
+              sampleVolunteer.name,
               sampleVolunteer.email,
               sampleVolunteer.phone,
-              sampleVolunteer.address,
-              sampleVolunteer.city,
-              sampleVolunteer.state,
-              sampleVolunteer.zip,
-              sampleVolunteer.skills,
-              sampleVolunteer.availability,
-              sampleVolunteer.experience,
-              sampleVolunteer.interests,
-              sampleVolunteer.referral,
-              sampleVolunteer.emergencyContact,
-              sampleVolunteer.emergencyPhone,
             ],
             (err) => {
               if (err) {
